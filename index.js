@@ -66,7 +66,7 @@ client.on("message", async message => {
     
     await member.kick(reason)
       .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-    message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}https://gfycat.com/playfulfittingcaribou');
+    message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}https://gfycat.com/playfulfittingcaribou`);
 
   }
   
