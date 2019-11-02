@@ -4,6 +4,9 @@
     "description": "The official BOT for Outlander!",
     "main": "index.js",
     "author": "Cult, Stefan",
+    "scripts": {
+        "start": "node index.js"
+    },
     "dependencies": {
         "discord.js": "^11.5.1"
     }
