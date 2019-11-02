@@ -1,0 +1,10 @@
+{
+    "name": "outlander-bot",
+    "version": "1",
+    "description": "The official BOT for Outlander!",
+    "main": "index.js",
+    "author": "Cult, Stefan",
+    "dependencies": {
+        "discord.js": "^11.5.1"
+    }
+}
