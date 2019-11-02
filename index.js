@@ -21,17 +21,50 @@ client.on("guildDelete", guild => {
 
 // Message event handling
 client.on("message", async message => {
+
+  // If message is by bot, then dont send any message
+  if (message.author.bot) return;
   
-  // without prefix
-  if (message.content == 'hello') {
-    message.reply('Hello');
+  // Basic message checking and replies
+  const hello = ['hello', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy'];
+  const gm = ['good morning', 'gm', 'morning', 'goodmorning'];
+  const gn = ['good night', 'gn', 'night', 'goodnight', 'nite', 'goodnite'];
+  const abuses = ['fuck', 'dick', 'pussy', 'hoe', 'retard', 'idiot', 'cunt'];
+  const hru = ['how are you', 'how r u', 'how are u', 'how r you', 'hru', 'hry'];
+  const bye = ['bai', 'bye', 'goodbye', 'good bye'];
+
+  if (hello.includes(message.content)) {
+    const index = Math.floor(Math.random() * hello.length + 1);
+    message.channel.sendMessage(hello[index]);
   }
-  if (message.content == 'good morning') {
-    message.reply ("Good morning!");
+
+  if (gm.includes(message.content)) {
+    message.channel.sendMessage(`Good morning ${message.author}! have a nice day!`);
+  }
+
+  if (gn.includes(message.content)) {
+    message.channel.sendMessage(`Good night ${message.author}! have sweet dreams!`);
+  } 
+
+  for (let abuse of abuses) {
+    if (message.content.includes(abuse)) {
+      message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
+    }
+  }
+
+  if (hru.includes(message.content) || hru.map(h => h.concat('?')).includes(message.content)) {
+    message.channel.sendMessage("I'm doing good." + message.author + ',what about you?');
+  }
+
+  if (bye.includes(message.content)) {
+    message.channel.sendMessage("Have a nice day" + message.author + 'Be safe!');
+  }
+  
+  if (message.content.includes('pk')) {
+    message.channel.sendMessage("go go go" + message.author + ',you are OP!');
   }
 
   // Some exceptions
-  if (message.author.bot) return;
   if (message.content.indexOf(config.prefix) !== 0) return;
 
   // Reading whats written in command
