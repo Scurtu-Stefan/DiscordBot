@@ -135,4 +135,4 @@ client.on("message", async message => {
 });
 
 // Starting the client
-client.login(config.token);
+client.login(process.env.TOKEN);
