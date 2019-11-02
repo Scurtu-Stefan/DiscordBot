@@ -64,6 +64,10 @@ client.on("message", async message => {
     message.channel.sendMessage("go go go" + message.author + ',you are OP!');
   }
 
+  if (message.content.includes('best fac') || message.content.includes('best faction')) {
+    message.channel.sendMessage('Ofcourse, best faction is Outlander');
+  }
+
   // Some exceptions
   if (message.content.indexOf(config.prefix) !== 0) return;
 
