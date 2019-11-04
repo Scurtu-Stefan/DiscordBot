@@ -26,14 +26,14 @@ client.on("message", async message => {
   if (message.author.bot) return;
   
   // Basic message checking and replies
-  const hello = ['hello', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy'];
+  const hello = ['hello', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy', 'ello'];
   const gm = ['good morning', 'gm', 'morning', 'goodmorning'];
   const gn = ['good night', 'gn', 'night', 'goodnight', 'nite', 'goodnite'];
   const abuses = ['fuck', 'dick', 'pussy', 'hoe', 'retard', 'idiot', 'cunt'];
   const hru = ['how are you', 'how r u', 'how are u', 'how r you', 'hru', 'hry'];
   const bye = ['bai', 'bye', 'goodbye', 'good bye'];
 
-  const msg = message.cleanContent.toLowerCase();
+  const msg = message.content.toLowerCase();
 
   if (hello.includes(msg)) {
     const index = Math.floor(Math.random() * hello.length + 1);
