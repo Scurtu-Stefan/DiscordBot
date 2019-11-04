@@ -26,12 +26,17 @@ client.on("message", async message => {
   if (message.author.bot) return;
   
   // Basic message checking and replies
-  const hello = ['hello', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy', 'ello'];
+  const hello = ['hello', 'hihi', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy', 'ello'];
   const gm = ['good morning', 'gm', 'morning', 'goodmorning'];
-  const gn = ['good night', 'gn', 'night', 'goodnight', 'nite', 'goodnite'];
-  const abuses = ['fuck', 'dick', 'pussy', 'hoe', 'retard', 'idiot', 'cunt'];
+  const gn = ['good night', 'gn', 'night', 'goodnight', 'nite', 'goodnite', 'nini'];
+  const abuses = ['fuck', 'dick', 'pussy', 'hoe', 'retard', 'idiot', 'cunt', 'bitch', 'fck', 'cuck', 'cock', 'pussi', 'pusy', 'slut', 'whore', 'bich', 'niga', 'nigga', 'niqqa', 'nibba', 'nig', 'nigger', 'niger'];
   const hru = ['how are you', 'how r u', 'how are u', 'how r you', 'hru', 'hry'];
+  const sup = ['wyd', 'sup', 'wassup', 'whats up', 'whatsup', 'what u doing', 'what up'];
   const bye = ['bai', 'bye', 'goodbye', 'good bye'];
+  const back = ['back', 'bck', 'bk', 'im back', 'i\'m back', 'm back'];
+  const afk = ['brb', 'ill brb', 'i\'ll brb', 'afk', 'ima afk', 'ill afk'];
+  const ty = ['ty', 'tyvm', 'thank u', 'thanks', 'tysm', 'thanku', 'thanx'];
+  const sorry = ['sorry', 'sry', 'im sry', 'i am sry', 'sory', 'i\'m sorry']
 
   const msg = message.content.toLowerCase();
 
@@ -55,15 +60,35 @@ client.on("message", async message => {
   }
 
   if (hru.includes(msg) || hru.map(h => h.concat('?')).includes(msg)) {
-    message.channel.sendMessage("I'm doing good." + message.author + ',what about you?');
+    message.channel.sendMessage("I'm doing good." + message.author + ', what about you?');
+  }
+
+  if (sup.includes(msg) || sup.map(h => h.concat('?')).includes(msg)) {
+    message.channel.sendMessage("Nothing much, " + message.author + ', what about you?');
   }
 
   if (bye.includes(msg)) {
-    message.channel.sendMessage("Have a nice day" + message.author + 'Be safe!');
+    message.channel.sendMessage("Have a nice day " + message.author + ', Be safe!');
   }
-  
-  if (msg.includes('pk')) {
-    message.channel.sendMessage("go go go" + message.author + ',you are OP!');
+
+  if (afk.includes(msg)) {
+    message.channel.sendMessage("Take your time " + message.author + ', see you soon!');
+  }
+
+  if (back.includes(msg)) {
+    message.channel.sendMessage("Welcome back " + message.author + ' :heart:');
+  }
+
+  if (ty.includes(msg)) {
+    message.channel.sendMessage("You're welcome " + message.author + ' :rose:');
+  }
+
+  if (sorry.includes(msg)) {
+    message.channel.sendMessage("It's alright " + message.author + '. No problem buddy :sunglasses: !');
+  }
+
+  if (msg == 'pk') {
+    message.channel.sendMessage("go go go " + message.author + ', you are OP!');
   }
 
   if (msg.includes('best fac') || msg.includes('best faction')) {
@@ -71,10 +96,10 @@ client.on("message", async message => {
   }
 
   // Some exceptions
-  if (message.msg.indexOf(config.prefix) !== 0) return;
+  if (message.content.indexOf(config.prefix) !== 0) return;
 
   // Reading whats written in command
-  const args = message.msg.slice(config.prefix.length).trim().split(/ +/g);
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   
   // !ping
