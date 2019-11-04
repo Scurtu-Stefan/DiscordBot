@@ -33,46 +33,48 @@ client.on("message", async message => {
   const hru = ['how are you', 'how r u', 'how are u', 'how r you', 'hru', 'hry'];
   const bye = ['bai', 'bye', 'goodbye', 'good bye'];
 
-  if (hello.includes(message.content)) {
+  const msg = message.cleanContent.toLowerCase();
+
+  if (hello.includes(msg)) {
     const index = Math.floor(Math.random() * hello.length + 1);
     message.channel.sendMessage(hello[index]);
   }
 
-  if (gm.includes(message.content)) {
+  if (gm.includes(msg)) {
     message.channel.sendMessage(`Good morning ${message.author}! have a nice day!`);
   }
 
-  if (gn.includes(message.content)) {
+  if (gn.includes(msg)) {
     message.channel.sendMessage(`Good night ${message.author}! have sweet dreams!`);
   } 
 
   for (let abuse of abuses) {
-    if (message.content.includes(abuse)) {
+    if (msg.includes(abuse)) {
       message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
 
-  if (hru.includes(message.content) || hru.map(h => h.concat('?')).includes(message.content)) {
+  if (hru.includes(msg) || hru.map(h => h.concat('?')).includes(msg)) {
     message.channel.sendMessage("I'm doing good." + message.author + ',what about you?');
   }
 
-  if (bye.includes(message.content)) {
+  if (bye.includes(msg)) {
     message.channel.sendMessage("Have a nice day" + message.author + 'Be safe!');
   }
   
-  if (message.content.includes('pk')) {
+  if (msg.includes('pk')) {
     message.channel.sendMessage("go go go" + message.author + ',you are OP!');
   }
 
-  if (message.content.includes('best fac') || message.content.includes('best faction')) {
+  if (msg.includes('best fac') || msg.includes('best faction')) {
     message.channel.sendMessage('Ofcourse, best faction is Outlander');
   }
 
   // Some exceptions
-  if (message.content.indexOf(config.prefix) !== 0) return;
+  if (message.msg.indexOf(config.prefix) !== 0) return;
 
   // Reading whats written in command
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const args = message.msg.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   
   // !ping
