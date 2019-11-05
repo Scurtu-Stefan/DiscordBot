@@ -5,11 +5,25 @@ const triggers = require('./data/triggers.json');
 const automute = require('./modules/automute.js');
 
 const client = new Discord.Client();
-const warnings = {};
+const warnings = [];
 
-const clear_warnings = () => { for (let warning in warnings) warnings[warning] = 0; }
+function findWarnings(name) {
+  let count = 0;
+  let index = -1;
+  for (let i = 0; i < warnings.length; i++) {
+    const entry_name = warnings[i][0];
+    const entry_count = warnings[i][1];
+    if (name == entry_name) {
+      count = entry_count;
+      index = i;
+      return;
+    }
+  }
+  return [count, index];
+}
 
-setInterval(clear_warnings, 10000);
+// const clear_warnings = () => { for (let warning in warnings) warnings[warning] = 0; }
+// setInterval(clear_warnings, 10000);
 
 // Setting Activity
 client.on("ready", () => {
@@ -54,15 +68,14 @@ client.on("message", async message => {
     if (msg.includes(abuse)) {
 
       // Counting warnings
-      const mbr = message.member.username;
-      warnings[mbr] = warnings[mbr] ? warnings[mbr] + 1 : 0;
-      if (warnings[mbr] > 3) {
-        automute(message, 15);
-      }
+      const name = message.member.username;
+      const [count, index] = findWarnings(name);
 
-      console.log(message.member);
-      console.log(warnings[message.member]);
-      message.channel.send(`${message.author}, you have ${warnings[message.member]} warnings!`);
+      // If it's first warning
+      if (index == -1) warnings.push([name, 0]);
+      else warnings[index][1] = count + 1;
+
+      message.channel.send(`${message.author}, you have ${count} warnings!`);
       // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
