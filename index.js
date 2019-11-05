@@ -54,7 +54,7 @@ client.on("message", async message => {
     if (msg.includes(abuse)) {
 
       // Counting warnings
-      const mbr = message.member;
+      const mbr = message.member.username;
       warnings[mbr] = warnings[mbr] ? warnings[mbr] + 1 : 0;
       if (warnings[mbr] > 3) {
         automute(message, 15);
