@@ -10,7 +10,7 @@ const warnings = [];
 function clearWarnings() {
   for (let i = 0; i < warnings.length; i++)
     warnings[i][1] = 0;
-  setInterval(clearWarnings, 10000);
+  setTimeout(clearWarnings, 60000);
 }
 clearWarnings();
 
@@ -31,9 +31,13 @@ function findWarnings(name) {
 // Setting Activity
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
+  client.user.setActivity("your lass", "WATCHING");
+});
+/*
+client.on("ready", () => {
+  console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
-
 client.on("guildCreate", guild => {
   console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
@@ -43,6 +47,7 @@ client.on("guildDelete", guild => {
   console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
+*/
 
 // Message event handling
 client.on("message", async message => {
@@ -84,13 +89,12 @@ client.on("message", async message => {
       // If it's last warning
       if (count == 3) {
         message.channel.send(`${message.author}, you have ${count} warnings!`);
+        // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
       }
       // Muting
       if (count > 3) {
-        automute(message.member, 15);
+        automute(message.member, 5);
       }
-
-      // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
 
