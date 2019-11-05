@@ -68,7 +68,7 @@ client.on("message", async message => {
     if (msg.includes(abuse)) {
 
       // Counting warnings
-      const name = message.member.username;
+      const name = message.member.user.username;
       const info = findWarnings(name);
       const count = info[0];
       const index = info[1];
