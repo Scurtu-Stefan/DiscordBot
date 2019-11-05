@@ -8,18 +8,18 @@ const client = new Discord.Client();
 const warnings = [];
 
 function findWarnings(name) {
-  let count = 0;
-  let index = -1;
+  // [count, index]
+  const info = [0, -1];
   for (let i = 0; i < warnings.length; i++) {
     const entry_name = warnings[i][0];
     const entry_count = warnings[i][1];
     if (name == entry_name) {
-      count = entry_count;
-      index = i;
+      info[0] = entry_count
+      info[1] = i;
       return;
     }
   }
-  return [count, index];
+  return info;
 }
 
 // const clear_warnings = () => { for (let warning in warnings) warnings[warning] = 0; }
