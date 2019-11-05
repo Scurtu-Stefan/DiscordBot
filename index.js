@@ -7,6 +7,14 @@ const automute = require('./modules/automute.js');
 const client = new Discord.Client();
 const warnings = [];
 
+function clearWarnings() {
+  for (let i = 0; i < warnings.length; i++) {
+    if (warnings[i][2] > 0) setTimeout(() => warnings[i][2] = 0, 3000);
+  }
+  setInterval(clearWarnings, 7000);
+}
+clearWarnings();
+
 function findWarnings(name) {
   // [count, index]
   const info = [0, -1];
@@ -20,9 +28,6 @@ function findWarnings(name) {
   }
   return info;
 }
-
-// const clear_warnings = () => { for (let warning in warnings) warnings[warning] = 0; }
-// setInterval(clear_warnings, 10000);
 
 // Setting Activity
 client.on("ready", () => {
