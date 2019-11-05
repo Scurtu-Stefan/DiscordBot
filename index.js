@@ -55,8 +55,8 @@ client.on("message", async message => {
 
       // Counting warnings
       const mbr = message.member;
-      warning[mbr] = warning[mbr] ? warning[mbr] + 1 : 0;
-      if (warning[mbr] > 3) {
+      warnings[mbr] = warnings[mbr] ? warnings[mbr] + 1 : 0;
+      if (warnings[mbr] > 3) {
         automute(message, 15);
       }
 
