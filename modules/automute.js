@@ -1,4 +1,4 @@
-module.exports = (message, time) => {
+module.exports = async (message, time) => {
     const muted = message.guild.member(message.mentions.users.first());
     if (!muted) return message.channel.send("Can't find the user!");
     if (muted.hasPermission("MANAGE_MESSAGES")) return message.reply("Can't mute them");
