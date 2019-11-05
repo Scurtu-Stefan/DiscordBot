@@ -1,17 +1,13 @@
-module.exports = async (message, time) => {
-    const muted = message.guild.member(message.mentions.users.first());
-    if (!muted) return message.channel.send("Can't find the user!");
-    if (muted.hasPermission("MANAGE_MESSAGES")) return message.reply("Can't mute them");
-
-    let muterole = message.guild.roles.find("name", "muted");
+module.exports = async (user, time) => {
+    let muterole = user.guild.roles.find("name", "Muted");
     if (!muterole) {
         try {
-            muterole = await message.guild.createRole({
+            muterole = await user.guild.createRole({
                 name: "muted",
                 color: "#0000000",
                 permissions: []
             });
-            message.guild.channels.forEach(async (channel, id) => {
+            user.guild.channels.forEach(async (channel, id) => {
                 await channel.overwritePermissions(muterole, {
                     SEND_MESSAGES: false,
                     ADD_REACTIONS: false
@@ -23,12 +19,12 @@ module.exports = async (message, time) => {
     }
 
     // Muting
-    muted.addRole(muterole.id);
-    message.channel.send(`<@${muted.id}> has been muted for abusing... :rage:`);
+    user.addRole(muterole.id);
+    user.lastMessage.channel.send(`<@${user.id}> has been muted for abusing... :rage:`);
 
     // Unmuting
     setTimeout(() => {
-        muted.removeRole(muterole.id);
-        message.channel.send(`<@${muted.id}> has been unmuted, better talk nice now! :blush:`);
+        user.removeRole(muterole.id);
+        user.lastMessage.channel.send(`<@${user.id}> has been unmuted, better talk nice now! :blush:`);
     }, time * 1000);
 }
