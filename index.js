@@ -77,6 +77,7 @@ client.on("message", async message => {
       if (index == -1) warnings.push([name, 0]);
       else warnings[index][1] = count + 1;
 
+      console.log(warnings);
       message.channel.send(`${message.author}, you have ${count} warnings!`);
       // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
