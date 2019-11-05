@@ -60,7 +60,10 @@ client.on("message", async message => {
         automute(message, 15);
       }
 
-      message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
+      console.log(message.member);
+      console.log(warnings[message.member]);
+      message.channel.send(`${message.author}, you have ${warnings[message.member]} warnings!`);
+      // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
 
