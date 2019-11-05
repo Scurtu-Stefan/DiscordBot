@@ -10,7 +10,7 @@ const warnings = [];
 function clearWarnings() {
   for (let i = 0; i < warnings.length; i++)
     warnings[i][1] = 0;
-  setTimeout(clearWarnings, 20000);
+  setTimeout(clearWarnings, 40000);
 }
 clearWarnings();
 
@@ -86,16 +86,16 @@ client.on("message", async message => {
       if (index == -1) warnings.push([name, 1]);
       else warnings[index][1] = count + 1;
 
-      // Warning at 3 tries
-      if (count == 3) {
+      // Warning at tries
+      if (count == 1) {
         message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
       }
       // If it's last warning
-      if (count == 6) {
+      if (count == 2) {
         message.channel.send(`${message.author}, you have ${count} warnings, abusing two more times will get u muted!`);
       }
       // Muting
-      if (count > 7) {
+      if (count > 3) {
         automute(message.member, 10);
         warnings[index][1] = 0;
       }
