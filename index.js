@@ -10,7 +10,7 @@ const warnings = [];
 function clearWarnings() {
   for (let i = 0; i < warnings.length; i++)
     warnings[i][1] = 0;
-  setTimeout(clearWarnings, 60000);
+  setTimeout(clearWarnings, 20000);
 }
 clearWarnings();
 
@@ -93,7 +93,8 @@ client.on("message", async message => {
       }
       // Muting
       if (count > 3) {
-        automute(message.member, 5);
+        automute(message.member, 10);
+        warnings[index][1] = 0;
       }
     }
   }
