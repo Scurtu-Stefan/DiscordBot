@@ -81,7 +81,7 @@ client.on("message", async message => {
       let count = info[0];
       const index = info[1];
       let count_t2 = info[2];
-      console.log(count);
+      console.log(info);
 
       // If it's first warning
       if (index == -1) warnings.push([name, 1, 0]);

@@ -20,16 +20,17 @@ module.exports = async (user, time) => {
 
     // Muting
     user.addRole(muterole.id);
+    user.lastMessage.channel.send(`<@${user.id}> has been muted for abusing... :rage:`);
 
     // Unmuting
-    if (time != -1) {
-        user.lastMessage.channel.send(`<@${user.id}> has been muted for abusing... :rage:`);
-        setTimeout(() => {
-            user.removeRole(muterole.id);
-            user.lastMessage.channel.send(`<@${user.id}> has been unmuted, better talk nice now! :blush:`);
-        }, time * 1000);
+
+    if (time == -1) {
+        return user.lastMessage.channel.send(`<@${user.id}> has been muted permanently until an Admin unmutes him/her.`)
     }
-    else {
-        user.lastMessage.channel.send(`<@${user.id}> has been muted permanently until an Admin unmutes him/her.`)
-    }
+
+    setTimeout(() => {
+        user.removeRole(muterole.id);
+        user.lastMessage.channel.send(`<@${user.id}> has been unmuted, better talk nice now! :blush:`);
+    }, time * 1000);
+    
 }
