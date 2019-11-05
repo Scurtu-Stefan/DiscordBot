@@ -9,7 +9,9 @@ const warnings = [];
 
 function clearWarnings() {
   for (let i = 0; i < warnings.length; i++) {
-    if (warnings[i][2] > 0) setTimeout(() => warnings[i][2] = 0, 3000);
+    if (warnings[i][2] > 0) setTimeout(() => {
+      warnings.splice(i, 1);
+    }, 3000);
   }
   setInterval(clearWarnings, 7000);
 }
@@ -79,8 +81,8 @@ client.on("message", async message => {
       console.log(count);
 
       // If it's first warning
-      if (index == -1) warnings.push([name, 0]);
-      else warnings[index][1] = ++count;
+      if (index == -1) warnings.push([name, 1]);
+      else warnings[index][1] = count + 1;
 
       // If it's last warning
       if (count == 3) {
