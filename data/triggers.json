@@ -1,0 +1,13 @@
+{
+    "hello": ["hello", "hihi", "hi", "hii", "hiii", "hola", "ola", "hai", "heya", "hey", "howdy", "ello"],
+    "gm": ["good morning", "gm", "morning", "goodmorning"],
+    "gn": ["good night", "gn", "night", "goodnight", "nite", "goodnite", "nini"],
+    "abuses": ["fuck", "dick", "pussy", "hoe", "retard", "idiot", "cunt", "bitch", "fck", "cuck", "cock", "pussi", "pusy", "slut", "whore", "bich", "niga", "nigga", "niqqa", "nibba", "nig", "nigger", "niger"],
+    "hru": ["how are you", "how r u", "how are u", "how r you", "hru", "hry"],
+    "sup": ["wyd", "sup", "wassup", "whats up", "whatsup", "what u doing", "what up"],
+    "bye": ["bai", "bye", "goodbye", "good bye"],
+    "back": ["back", "bck", "bk", "im back", "i'm back", "m back"],
+    "afk": ["brb", "ill brb", "i'll brb", "afk", "ima afk", "ill afk"],
+    "ty": ["ty", "tyvm", "thank u", "thanks", "tysm", "thanku", "thanx"],
+    "sorry": ["sorry", "sry", "im sry", "i am sry", "sory", "i'm sorry"]
+}

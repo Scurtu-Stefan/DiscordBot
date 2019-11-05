@@ -1,7 +1,10 @@
 // Initialize client
 const Discord = require('discord.js');
+const config = require('./data/config.json');
+const triggers = require('./data/triggers.json');
+const automute = require('./modules/automute.js');
+
 const client = new Discord.Client();
-const config = require('./config.json')
 
 // Setting Activity
 client.on("ready", () => {
@@ -25,65 +28,54 @@ client.on("message", async message => {
   // If message is by bot, then dont send any message
   if (message.author.bot) return;
   
-  // Basic message checking and replies
-  const hello = ['hello', 'hihi', 'hi', 'hii', 'hiii', 'hola', 'ola', 'hai', 'heya', 'hey', 'howdy', 'ello'];
-  const gm = ['good morning', 'gm', 'morning', 'goodmorning'];
-  const gn = ['good night', 'gn', 'night', 'goodnight', 'nite', 'goodnite', 'nini'];
-  const abuses = ['fuck', 'dick', 'pussy', 'hoe', 'retard', 'idiot', 'cunt', 'bitch', 'fck', 'cuck', 'cock', 'pussi', 'pusy', 'slut', 'whore', 'bich', 'niga', 'nigga', 'niqqa', 'nibba', 'nig', 'nigger', 'niger'];
-  const hru = ['how are you', 'how r u', 'how are u', 'how r you', 'hru', 'hry'];
-  const sup = ['wyd', 'sup', 'wassup', 'whats up', 'whatsup', 'what u doing', 'what up'];
-  const bye = ['bai', 'bye', 'goodbye', 'good bye'];
-  const back = ['back', 'bck', 'bk', 'im back', 'i\'m back', 'm back'];
-  const afk = ['brb', 'ill brb', 'i\'ll brb', 'afk', 'ima afk', 'ill afk'];
-  const ty = ['ty', 'tyvm', 'thank u', 'thanks', 'tysm', 'thanku', 'thanx'];
-  const sorry = ['sorry', 'sry', 'im sry', 'i am sry', 'sory', 'i\'m sorry']
-
+  // Making a string with message text but lower case
   const msg = message.content.toLowerCase();
-
-  if (hello.includes(msg)) {
-    const index = Math.floor(Math.random() * hello.length + 1);
-    message.channel.sendMessage(hello[index]);
+  
+  // Basic message checking and replies
+  if (triggers.hello.includes(msg)) {
+    const index = Math.floor(Math.random() * triggers.hello.length + 1);
+    message.channel.sendMessage(triggers.hello[index]);
   }
 
-  if (gm.includes(msg)) {
+  if (triggers.gm.includes(msg)) {
     message.channel.sendMessage(`Good morning ${message.author}! have a nice day!`);
   }
 
-  if (gn.includes(msg)) {
+  if (triggers.gn.includes(msg)) {
     message.channel.sendMessage(`Good night ${message.author}! have sweet dreams!`);
   } 
 
-  for (let abuse of abuses) {
+  for (let abuse of triggers.abuses) {
     if (msg.includes(abuse)) {
       message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
 
-  if (hru.includes(msg) || hru.map(h => h.concat('?')).includes(msg)) {
+  if (triggers.hru.includes(msg) || triggers.hru.map(h => h.concat('?')).includes(msg)) {
     message.channel.sendMessage("I'm doing good." + message.author + ', what about you?');
   }
 
-  if (sup.includes(msg) || sup.map(h => h.concat('?')).includes(msg)) {
+  if (triggers.sup.includes(msg) || triggers.sup.map(h => h.concat('?')).includes(msg)) {
     message.channel.sendMessage("Nothing much, " + message.author + ', what about you?');
   }
 
-  if (bye.includes(msg)) {
+  if (triggers.bye.includes(msg)) {
     message.channel.sendMessage("Have a nice day " + message.author + ', Be safe!');
   }
 
-  if (afk.includes(msg)) {
+  if (triggers.afk.includes(msg)) {
     message.channel.sendMessage("Take your time " + message.author + ', see you soon!');
   }
 
-  if (back.includes(msg)) {
+  if (triggers.back.includes(msg)) {
     message.channel.sendMessage("Welcome back " + message.author + ' :heart:');
   }
 
-  if (ty.includes(msg)) {
+  if (triggers.ty.includes(msg)) {
     message.channel.sendMessage("You're welcome " + message.author + ' :rose:');
   }
 
-  if (sorry.includes(msg)) {
+  if (triggers.sorry.includes(msg)) {
     message.channel.sendMessage("It's alright " + message.author + '. No problem buddy :sunglasses: !');
   }
 
@@ -117,16 +109,16 @@ client.on("message", async message => {
   
   // !kick
   if(command === "kick") {
-    if(!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)))
+    if (!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)))
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-    if(!member)
+    if (!member)
       return message.reply("Please mention a valid member of this server");
-    if(!member.kickable) 
+    if (!member.kickable) 
       return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
     
     let reason = args.slice(1).join(' ');
-    if(!reason) reason = "No reason provided";
+    if (!reason) reason = "No reason provided";
     
     await member.kick(reason)
       .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
@@ -136,29 +128,35 @@ client.on("message", async message => {
   
   // !ban
   if(command === "ban") {
-    if(!message.member.roles.some(r=>["Administrator"].includes(r.name)) )
+    if (!message.member.roles.some(r=>["Administrator"].includes(r.name)))
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first();
-    if(!member)
+    if (!member)
       return message.reply("Please mention a valid member of this server");
-    if(!member.bannable) 
+    if (!member.bannable) 
       return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
     let reason = args.slice(1).join(' ');
-    if(!reason) reason = "No reason provided";
+    if (!reason) reason = "No reason provided";
     await member.ban(reason)
       .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
     message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
   }
   
   // !purge
-  if(command === "purge") {
+  if (command === "purge") {
     const deleteCount = parseInt(args[0], 10);
-    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
+    if (!deleteCount || deleteCount < 2 || deleteCount > 100)
       return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
     const fetched = await message.channel.fetchMessages({limit: deleteCount});
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
+
+  // !mute
+  if (command === "mute") {
+    automute(message, parseInt(args[0], 10));
+  }
+
 });
 
 // Starting the client
