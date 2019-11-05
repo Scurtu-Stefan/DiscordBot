@@ -5,6 +5,11 @@ const triggers = require('./data/triggers.json');
 const automute = require('./modules/automute.js');
 
 const client = new Discord.Client();
+const warnings = {};
+
+const clear_warnings = () => { for (let warning in warnings) warnings[warning] = 0; }
+
+setInterval(clear_warnings, 10000);
 
 // Setting Activity
 client.on("ready", () => {
@@ -43,10 +48,18 @@ client.on("message", async message => {
 
   if (triggers.gn.includes(msg)) {
     message.channel.sendMessage(`Good night ${message.author}! have sweet dreams!`);
-  } 
+  }
 
   for (let abuse of triggers.abuses) {
     if (msg.includes(abuse)) {
+
+      // Counting warnings
+      const mbr = message.member;
+      warning[mbr] = warning[mbr] ? warning[mbr] + 1 : 0;
+      if (warning[mbr] > 3) {
+        automute(message, 15);
+      }
+
       message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
@@ -151,12 +164,6 @@ client.on("message", async message => {
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
-
-  // !mute
-  if (command === "mute") {
-    automute(message, parseInt(args[0], 10));
-  }
-
 });
 
 // Starting the client

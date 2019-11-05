@@ -30,5 +30,5 @@ module.exports = async (message, time) => {
     setTimeout(() => {
         muted.removeRole(muterole.id);
         message.channel.send(`<@${muted.id}> has been unmuted, better talk nice now! :blush:`);
-    }, time);
+    }, time * 1000);
 }
