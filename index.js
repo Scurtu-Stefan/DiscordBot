@@ -81,7 +81,7 @@ client.on("message", async message => {
 
       // Muting
       if (count > 3) {
-        automute(message, 15);
+        automute(message.member, 15);
       }
 
       message.channel.send(`${message.author}, you have ${count + 1} warnings!`);
