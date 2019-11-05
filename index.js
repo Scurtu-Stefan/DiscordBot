@@ -69,7 +69,9 @@ client.on("message", async message => {
 
       // Counting warnings
       const name = message.member.username;
-      const [count, index] = findWarnings(name);
+      const info = findWarnings(name);
+      const count = info[0];
+      const index = info[1];
 
       // If it's first warning
       if (index == -1) warnings.push([name, 0]);
