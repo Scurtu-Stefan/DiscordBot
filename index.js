@@ -74,17 +74,18 @@ client.on("message", async message => {
 
       // If it's first warning
       if (index == -1) warnings.push([name, 0]);
-      else warnings[index][1] = count + 1;
+      else warnings[index][1] = ++count;
 
       // If it's last warning
-      // TODO
+      if (count == 3) {
+        message.channel.send(`${message.author}, you have ${count} warnings!`);
+      }
 
       // Muting
       if (count > 3) {
         automute(message.member, 15);
       }
 
-      message.channel.send(`${message.author}, you have ${count + 1} warnings!`);
       // message.channel.sendMessage(`WARNING: Stop Cursing, Talk Nice ${message.author}, You must have a wish to get mute.`);
     }
   }
