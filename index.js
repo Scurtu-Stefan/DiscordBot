@@ -8,12 +8,9 @@ const client = new Discord.Client();
 const warnings = [];
 
 function clearWarnings() {
-  for (let i = 0; i < warnings.length; i++) {
-    if (warnings[i][2] > 0) setTimeout(() => {
-      warnings.splice(i, 1);
-    }, 3000);
-  }
-  setInterval(clearWarnings, 7000);
+  for (let i = 0; i < warnings.length; i++)
+    warnings[i][1] = 0;
+  setInterval(clearWarnings, 10000);
 }
 clearWarnings();
 
