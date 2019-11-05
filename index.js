@@ -83,7 +83,7 @@ client.on("message", async message => {
       console.log(count);
 
       // If it's first warning
-      if (index = -1) warnings.push([name, 1]);
+      if (index == -1) warnings.push([name, 1]);
       else warnings[index][1] = count + 1;
 
       // Warning at 3 tries
