@@ -80,10 +80,11 @@ client.on("message", async message => {
       const info = findWarnings(name);
       let count = info[0];
       const index = info[1];
+      let count_t2 = info[2];
       console.log(count);
 
       // If it's first warning
-      if (index == -1) warnings.push([name, 1]);
+      if (index == -1) warnings.push([name, 1, 0]);
       else warnings[index][1] = count + 1;
 
       // Warning at tries
@@ -96,10 +97,26 @@ client.on("message", async message => {
       }
       // Muting
       if (count > 3) {
-        automute(message.member, 10);
-        warnings[index][1] = 0;
+        if (count_t2 == 0) {
+          automute(message.member, 10);
+          warnings[index][1] = 0;
+          warnings[index][2] = warnings[index][2] + 1;
+        }
+  
+        if (count_t2 == 1) {
+          automute(message.member, 30);
+          warnings[index][1] = 0;
+          warnings[index][2] = warnings[index][2] + 1;
+        }
+
+        if (count_t2 == 2) {
+          automute(message.member, -1);
+          warnings[index][1] = 0;
+          warnings[index][2] = 0;
+        }
       }
     }
+    break;
   }
 
   if (triggers.hru.includes(msg) || triggers.hru.map(h => h.concat('?')).includes(msg)) {
@@ -152,14 +169,25 @@ client.on("message", async message => {
   }
   
   // !say
-  if(command === "say") {
+  if (command === "say") {
     const sayMessage = args.join(" ");
     message.delete().catch(O_o=>{}); 
     message.channel.send(sayMessage);
   }
+
+  // !unmute
+  if (command === "unmute") {
+    if (!message.member.hasPermission("MANAGE_MESSAGES"))
+      return message.reply("Sorry, you don't have permissions to use this!");
+    let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if (!member)
+      return message.reply("Please mention a valid member of this server");
+    member.removeRole(user.guild.roles.find("name", "Muted").id);
+    message.channel.send(`<@${memeber.id}> has been unmuted, talk nice now :smile:`);
+  }
   
   // !kick
-  if(command === "kick") {
+  if (command === "kick") {
     if (!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)))
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -178,7 +206,7 @@ client.on("message", async message => {
   }
   
   // !ban
-  if(command === "ban") {
+  if (command === "ban") {
     if (!message.member.roles.some(r=>["Administrator"].includes(r.name)))
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first();
