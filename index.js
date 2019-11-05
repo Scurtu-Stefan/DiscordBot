@@ -15,14 +15,16 @@ function clearWarnings() {
 clearWarnings();
 
 function findWarnings(name) {
-  // [count, index]
-  const info = [0, -1];
+  // [count, index, count_t2]
+  const info = [0, -1, 0];
   for (let i = 0; i < warnings.length; i++) {
     const entry_name = warnings[i][0];
     const entry_count = warnings[i][1];
+    const entry_count_t2 = warnings[i][2];
     if (name == entry_name) {
       info[0] = entry_count
       info[1] = i;
+      info[2] = entry_count_t2;
     }
   }
   return info;
