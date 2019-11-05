@@ -16,7 +16,6 @@ function findWarnings(name) {
     if (name == entry_name) {
       info[0] = entry_count
       info[1] = i;
-      return;
     }
   }
   return info;
