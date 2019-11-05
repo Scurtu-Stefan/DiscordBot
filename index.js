@@ -76,6 +76,7 @@ client.on("message", async message => {
       const info = findWarnings(name);
       let count = info[0];
       const index = info[1];
+      console.log(count);
 
       // If it's first warning
       if (index == -1) warnings.push([name, 0]);
@@ -85,7 +86,6 @@ client.on("message", async message => {
       if (count == 3) {
         message.channel.send(`${message.author}, you have ${count} warnings!`);
       }
-
       // Muting
       if (count > 3) {
         automute(message.member, 15);
