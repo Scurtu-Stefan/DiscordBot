@@ -185,7 +185,7 @@ client.on("message", async message => {
     if (!member)
       return message.reply("Please mention a valid member of this server");
     member.removeRole(member.guild.roles.find("name", "Muted").id);
-    message.channel.send(`<@${memeber.id}> has been unmuted, talk nice now :smile:`);
+    message.channel.send(`<@${member.id}> has been unmuted, talk nice now :smile:`);
   }
   
   // !kick
