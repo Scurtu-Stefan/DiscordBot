@@ -118,7 +118,6 @@ client.on("message", async message => {
         }
       }
     }
-    break;
   }
 
   if (triggers.hru.includes(msg) || triggers.hru.map(h => h.concat('?')).includes(msg)) {
